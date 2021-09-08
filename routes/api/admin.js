@@ -7,7 +7,7 @@ const { check, validationResult } = require('express-validator');
 
 const Admin = require('../../models/Admin');
 
-// @route   GET api/admin
+// @route   POST api/admin
 // @desc    Register admin
 // @access  public
 router.post('/', [
@@ -61,7 +61,7 @@ router.post('/', [
         //res.send('User registered')
 
     } catch(err) {
-        console.error(error.message);
+        console.error(err.message);
         res.status(500).send('Server error');   
         //since this is the last res.status or res.json, return isn't needed
     }

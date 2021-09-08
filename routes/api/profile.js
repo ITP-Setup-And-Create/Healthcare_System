@@ -118,7 +118,7 @@ router.get('/admin/:admin_id', async (req, res) => {
 });
 
 // @route   DELETE api/profile
-// @desc    Delete profile, admin & medicines
+// @desc    Delete profile, admin & posts
 // @access  Private
 router.delete('/', auth, async (req, res) => {
     try {
