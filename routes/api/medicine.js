@@ -122,4 +122,27 @@ router.get('/:name', async (req, res) => {
     }
 });
 
+// @route   DELETE api/medicine/:name
+// @desc    Delete medicine by name
+// @access  private
+router.delete('/:name', async (req, res) => {
+    try {
+        const medicine = await Medicine.findOne({ name: { $regex: new RegExp("^" + req.params.name + "$", "i") }});
+
+        if(!medicine) {
+            return res.status(404).json({ msg: 'Medicine not found' });
+        }
+
+        await medicine.remove();
+
+        res.json({ msg: 'Medicine removed' });
+    } catch (err) {
+        console.error(err.message);
+        if(err.kind === 'String') {
+            return res.status(404).json({ msg: 'Medicine not found' });
+        }
+        res.status(500).send('Server error');
+    }
+});
+
 module.exports = router;
