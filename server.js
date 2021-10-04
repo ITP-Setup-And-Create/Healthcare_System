@@ -13,12 +13,11 @@ app.use(express.json({ extended: false }));
 app.get('/', (req, res) => res.send('My API running'));    //this is a route
 
 // Define Routes
-app.use('/api/admin', require('./routes/api/admin'));
+app.use('/api/user', require('./routes/api/user'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
-app.use('/api/medicine', require('./routes/api/medicine'));
-app.use('/api/cart', require('./routes/api/cart'));
+
 
 const PORT = process.env.PORT || 5000;
 

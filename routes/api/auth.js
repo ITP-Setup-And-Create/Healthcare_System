@@ -6,15 +6,15 @@ const config = require('config');
 
 const { check, validationResult } = require('express-validator'); 
 
-const Admin = require('../../models/Admin');
+const User = require('../../models/User');
 
 // @route   GET api/auth
 // @desc    Test route
 // @access  public
 router.get('/', auth, async (req, res) => {
     try {
-        const admin = await Admin.findById(req.admin.id); //.select('-password');
-        res.json(admin);
+        const user = await User.findById(req.user.id); //.select('-password');
+        res.json(user);
     } catch(err) {
         console.error(error.message);
         res.status(500).send('Server error');
@@ -22,7 +22,7 @@ router.get('/', auth, async (req, res) => {
 });
 
 // @route   GET api/auth
-// @desc    Authenticate admin & get token
+// @desc    Authenticate user & get token
 // @access  public
 router.post('/', [
     check('email', 'Please include a valid email').isEmail(),
@@ -36,22 +36,22 @@ router.post('/', [
     const { email, password } = req.body;
 
     try {
-        // See if admin exists
-        let admin = await Admin.findOne({ email });
+        // See if user exists
+        let user = await User.findOne({ email });
 
-        if(!admin) {
+        if(!user) {
             return res.status(400).json({ errors: [{ msg: 'Invalid credentials-email'}] });
         }
 
         //To verify password
-        if(password != admin.password){
+        if(password != user.password){
             return res.status(400).json({ errors: [{ msg: 'Invalid credentials-pass'}] });
         }
 
         // Return jsonwebtoken
          const payload = {
-            admin: {
-                id: admin.id
+            user: {
+                id: user.id
             }
         }
 

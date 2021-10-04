@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addExperience } from '../../actions/profile';
+import { addReminder } from '../../actions/profile';
 
-const AddExperience = ({ addExperience, history }) => {
+const AddReminder = ({ addReminder, history }) => {
     const [formData, setFormData] = useState({
         company: '',
         from: '',
@@ -21,21 +21,21 @@ const AddExperience = ({ addExperience, history }) => {
     return (
         <Fragment>
             <h1 class="large text-primary">
-                Add An Experience
+                Add A Reminder
             </h1>
             <p class="lead">
-                <i class="fas fa-code-branch"></i> Add any developer/programming positions that you have had in the past
+                <i class="fas fa-code-branch"></i> Add a reminder that you would need for the future
             </p>
             <small>* = required field</small>
             <form class="form" onSubmit= {e => {
                 e.preventDefault();
-                addExperience(formData, history);
+                addReminder(formData, history);
             }} >
                 {/* <div class="form-group">
                     <input type="text" placeholder="* Job Title" name="title" required />
                 </div> */}
                 <div class="form-group">
-                    <input type="text" placeholder="* Company" name="company" value={company} onChange={e => onChange(e)} required />
+                    <input type="text" placeholder="* Type reminder here" name="company" value={company} onChange={e => onChange(e)} required />
                 </div>
                 {/* <div class="form-group">
                     <input type="text" placeholder="Location" name="location" />
@@ -47,7 +47,7 @@ const AddExperience = ({ addExperience, history }) => {
                 <div class="form-group">
                     <p><input type="checkbox" name="current" checked={current} value={current} onChange={e => {setFormData({...formData, current: !current });
                     toggleDisabled(!toDateDisabled);
-                }} /> {' '}Current Job</p>
+                }} /> </p>
                 </div>
                 <div class="form-group">
                     <h4>To Date</h4>
@@ -67,8 +67,8 @@ const AddExperience = ({ addExperience, history }) => {
     )
 }
 
-AddExperience.propTypes = {
-    addExperience: PropTypes.func.isRequired
+AddReminder.propTypes = {
+    addReminder: PropTypes.func.isRequired
 }
 
-export default connect(null, { addExperience })(AddExperience);
+export default connect(null, { addReminder })(withRouter(AddReminder));

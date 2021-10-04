@@ -7,7 +7,7 @@ import { createProfile, getCurrentProfile } from '../../actions/profile';
 const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentProfile, history }) => {
     const [formData, setFormData] = useState({ 
         status: '',
-        skills: '',
+        details: '',
         bio: '',
         youtube: '',
         linkedin: ''
@@ -20,16 +20,16 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
 
         setFormData({
             status: loading || !profile.status ? '' : profile.status,
-            skills: loading || !profile.skills ? '' : profile.skills,
+            details: loading || !profile.details ? '' : profile.details,
             bio: loading || !profile.bio ? '' : profile.bio,
             youtube: loading || !profile.social ? '' : profile.social.youtube,
             linkedin: loading || !profile.social ? '' : profile.social.linkedin
         });
-    }, [loading]);
+    }, [loading, getCurrentProfile]);
 
     const {
         status,
-        skills,
+        details,
         bio,
         youtube,
         linkedin
@@ -54,14 +54,14 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
             <form className="form" onSubmit={e => onSubmit(e)} > 
                 <div className="form-group">
                     <select name="status" value={status} onChange={e => onChange(e)}>
-                        <option value="0">* Select Professional Status</option>
-                        <option value="Developer">Developer</option>
-                        <option value="Junior Developer">Junior Developer</option>
-                        <option value="Senior Developer">Senior Developer</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Student or Learning">Student or Learning</option>
-                        <option value="Instructor">Instructor or Teacher</option>
-                        <option value="Intern">Intern</option>
+                    <option value="0">* Select Professional Status</option>
+                        <option value="Student">Student</option>
+                        <option value="Retiree">Retiree</option>
+                        <option value="Government Servant">Government Servant</option>
+                        <option value="Employed-Private Sector">Employed-Private Sector</option>
+                        <option value="Official">Official</option>
+                        <option value="Pensioner">Pensioner or Teacher</option>
+                        <option value="Tourist">Tourist</option>
                         <option value="Other">Other</option>
                     </select>
                     <small className="form-text">Give us an idea of where you are at in your career</small>
@@ -79,7 +79,7 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, getCurrentP
                     <small className="form-text">City & state suggested (eg. Boston, MA)</small>
                 </div> */}
                 <div className="form-group">
-                    <input type="text" placeholder="* Skills" name="skills" value={skills} onChange={e => onChange(e)} />
+                    <input type="text" placeholder="* Details" name="details" value={details} onChange={e => onChange(e)} />
                     <small className="form-text">Please use comma separated values (eg.HTML,CSS,JavaScript,PHP)</small>
                 </div>
                 {/* <div className="form-group">

@@ -1,22 +1,26 @@
 const mongoose = require('mongoose');
 
 const ProfileSchema = new mongoose.Schema({
-  admin: {
+  user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'admin'
+    ref: 'user'
   },
   status: {
     type: String,
     required: true
   },
-  skills: {
+  details: {
     type: [String],
     required: true
   },
   bio: {
     type: String
   },
-  experience: [
+  location:{
+    type:String
+  },
+  
+  reminder: [
     {
       company: {
         type: String,

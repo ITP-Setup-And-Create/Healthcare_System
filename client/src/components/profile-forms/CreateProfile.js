@@ -7,7 +7,7 @@ import { createProfile } from '../../actions/profile';
 const CreateProfile = ({ createProfile, history }) => {
     const [formData, setFormData] = useState({ 
         status: '',
-        skills: '',
+        details: '',
         bio: '',
         youtube: '',
         linkedin: ''
@@ -17,7 +17,7 @@ const CreateProfile = ({ createProfile, history }) => {
 
     const {
         status,
-        skills,
+        details,
         bio,
         youtube,
         linkedin
@@ -43,13 +43,13 @@ const CreateProfile = ({ createProfile, history }) => {
                 <div className="form-group">
                     <select name="status" value={status} onChange={e => onChange(e)}>
                         <option value="0">* Select Professional Status</option>
-                        <option value="Developer">Developer</option>
-                        <option value="Junior Developer">Junior Developer</option>
-                        <option value="Senior Developer">Senior Developer</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Student or Learning">Student or Learning</option>
-                        <option value="Instructor">Instructor or Teacher</option>
-                        <option value="Intern">Intern</option>
+                        <option value="Student">Student</option>
+                        <option value="Retiree">Retiree</option>
+                        <option value="Government Servant">Government Servant</option>
+                        <option value="Employed-Private Sector">Employed-Private Sector</option>
+                        <option value="Official">Official</option>
+                        <option value="Pensioner">Pensioner or Teacher</option>
+                        <option value="Tourist">Tourist</option>
                         <option value="Other">Other</option>
                     </select>
                     <small className="form-text">Give us an idea of where you are at in your career</small>
@@ -62,13 +62,13 @@ const CreateProfile = ({ createProfile, history }) => {
                     <input type="text" placeholder="Website" name="website" />
                     <small className="form-text">Could be your own or a company website</small>
                 </div> */}
-                {/* <div className="form-group">
+                 {/* <div className="form-group">
                     <input type="text" placeholder="Location" name="location" />
                     <small className="form-text">City & state suggested (eg. Boston, MA)</small>
-                </div> */}
+                </div>  */}
                 <div className="form-group">
-                    <input type="text" placeholder="* Skills" name="skills" value={skills} onChange={e => onChange(e)} />
-                    <small className="form-text">Please use comma separated values (eg.HTML,CSS,JavaScript,PHP)</small>
+                    <input type="text" placeholder="* Contact details" name="details" value={details} onChange={e => onChange(e)} />
+                    <small className="form-text">Enter Contact Details please use comma separated values and fill respectively (eg.Phone Number,Emergency contact,Email)</small>
                 </div>
                 {/* <div className="form-group">
                 <input
@@ -82,8 +82,8 @@ const CreateProfile = ({ createProfile, history }) => {
                 >
                 </div> */}
                 <div className="form-group">
-                    <textarea placeholder="A short bio of yourself" name="bio" value={bio} onChange={e => onChange(e)}></textarea>
-                    <small className="form-text">Tell us a little about yourself</small>
+                    <textarea placeholder="Enter your current residing address" name="bio" value={bio} onChange={e => onChange(e)}></textarea>
+                    <small className="form-text">Please enter your address,</small>
                 </div>
 
                 <div className="my-2">
@@ -105,10 +105,10 @@ const CreateProfile = ({ createProfile, history }) => {
                         <input type="text" placeholder="Facebook URL" name="facebook" />
                         </div> */}
 
-                        <div className="form-group social-input">
+                        {/* <div className="form-group social-input">
                         <i className="fab fa-youtube fa-2x"></i>
                         <input type="text" placeholder="YouTube URL" name="youtube" value={youtube} onChange={e => onChange(e)}/>
-                        </div>
+                        </div> */}
 
                         <div className="form-group social-input">
                         <i className="fab fa-linkedin fa-2x"></i>

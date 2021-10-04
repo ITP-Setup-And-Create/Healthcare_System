@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const CartSchema = new mongoose.Schema({
-    admin: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'admin'
+        ref: 'user'
     },
     medicine: {
         type: mongoose.Schema.Types.String,

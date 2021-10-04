@@ -6,8 +6,8 @@ const DashboardActions = () => {
         <div class="dash-buttons">
             <Link to="/edit-profile" class="btn btn-light"
             ><i class="fas fa-user-circle text-primary"></i> Edit Profile</Link>
-            <Link to="/add-experience" class="btn btn-light"
-            ><i class="fab fa-black-tie text-primary"></i> Add Experience</Link>
+            <Link to="/add-reminder" class="btn btn-light"
+            ><i class="fab fa-black-tie text-primary"></i> Add Reminder</Link>
         </div>
     )
 }

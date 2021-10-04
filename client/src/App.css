@@ -398,7 +398,7 @@ button {
   text-align: center;
 }
 
-.profile-about .skills {
+.profile-about .details {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -557,7 +557,7 @@ button {
       'github';
   }
 
-  .profile-about .skills {
+  .profile-about .details {
     flex-direction: column;
   }
 

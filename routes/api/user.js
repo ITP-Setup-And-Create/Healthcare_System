@@ -5,10 +5,10 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 const { check, validationResult } = require('express-validator');
 
-const Admin = require('../../models/Admin');
+const User = require('../../models/User');
 
-// @route   POST api/admin
-// @desc    Register admin
+// @route   POST api/user
+// @desc    Register user
 // @access  public
 router.post('/', [
     check('name', 'Name is required').not().isEmpty(),
@@ -24,14 +24,14 @@ router.post('/', [
     const { name, nic, email, password } = req.body;
 
     try {
-        // See if admin exists
-        let admin = await Admin.findOne({ nic });
+        // See if user exists
+        let user = await User.findOne({ nic });
 
-        if(admin) {
-            return res.status(400).json({ errors: [{ msg: 'Admin already exists'}] });
+        if(user) {
+            return res.status(400).json({ errors: [{ msg: 'User already exists'}] });
         }
 
-        admin = new Admin({ 
+        user = new User({ 
             name,
             nic,
             email,
@@ -41,14 +41,14 @@ router.post('/', [
         // Encrypt password
         /* const salt = await bcrypt.genSalt(10);
 
-        admin.password = await bcrypt.hash(password, salt); */  //takes in plain text password and salt
+        user.password = await bcrypt.hash(password, salt); */  //takes in plain text password and salt
 
-        await admin.save();  //save admin to database
+        await user.save();  //save user to database
 
         // Return jsonwebtoken
          const payload = {
-            admin: {
-                id: admin.id
+            user: {
+                id: user.id
             }
         }
 

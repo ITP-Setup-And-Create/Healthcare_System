@@ -28,7 +28,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         else {
           register({ name, nic, email, password });
 
-            /* const newAdmin = {
+            /* const newUser = {
                 name,
                 nic,
                 email,
@@ -44,11 +44,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
                 console.log('Here');
 
-                const body = JSON.stringify(newAdmin);
+                const body = JSON.stringify(newUser);
 
                 console.log('Here2');
 
-                const res = await axios.post('/api/admin', body, config);
+                const res = await axios.post('/api/user', body, config);
                 console.log(res.data);
             } catch (err) {
                 console.error(err.response.data);

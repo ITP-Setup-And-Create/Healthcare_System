@@ -4,17 +4,17 @@ const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator'); 
 
 const Profile = require('../../models/Profile');
-const Admin = require('../../models/Admin');
+const User = require('../../models/User');
 
 // @route   GET api/profile/me
 // @desc    Get current users profile
 // @access  Private
 router.get('/me', auth, async (req, res) => { //async because we're using mongoose, which returns a promise
     try {
-        const profile = await Profile.findOne({ admin: req.admin.id }).populate('admin', ['name']);
+        const profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name']);
 
         if(!profile) {
-            return res.status(400).json({ msg: 'There is no profile for this admin'})
+            return res.status(400).json({ msg: 'There is no profile for this user'})
         }
 
         res.json(profile);
@@ -29,7 +29,7 @@ router.get('/me', auth, async (req, res) => { //async because we're using mongoo
 // @access  Private
 router.post('/', [ auth, [
     check('status', 'Status is required').not().isEmpty(),
-    check('skills', 'Skills is required').not().isEmpty()
+    check('details', 'Details is required').not().isEmpty()
 ]], async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
@@ -39,18 +39,18 @@ router.post('/', [ auth, [
     const {
         bio,
         status,
-        skills,
+        details,
         youtube,
         linkedin,
     } = req.body;
 
     //Build profile object
     const profileFields = {};
-    profileFields.admin = req.admin.id;
+    profileFields.user = req.user.id;
     if (bio) profileFields.bio = bio;
     if (status) profileFields.status = status;
-    if (skills) {
-        profileFields.skills = skills.split(',').map(skill => skill.trim());
+    if (details) {
+        profileFields.details = details.split(',').map(detail => detail.trim());
     }
 
     //Build social object
@@ -58,15 +58,15 @@ router.post('/', [ auth, [
     if (linkedin) profileFields.social.linkedin = linkedin;
     if (youtube) profileFields.social.youtube = youtube;
 
-    //console.log(profileFields.skills);
+    //console.log(profileFields.details);
 
     try {
-        let profile = await Profile.findOne({ admin: req.admin.id });
+        let profile = await Profile.findOne({ user: req.user.id });
 
         if(profile) {
             //Update
             profile = await Profile.findOneAndUpdate(
-                { admin: req.admin.id }, 
+                { user: req.user.id }, 
                 { $set: profileFields}, 
                 { new : true}
             );
@@ -90,7 +90,7 @@ router.post('/', [ auth, [
 // @access  Public
 router.get('/', async (req, res) => {
     try {
-        const profiles = await Profile.find().populate('admin', ['name']);
+        const profiles = await Profile.find().populate('user', ['name']);
         res.json(profiles);
     } catch (err) {
         console.error(err.message);
@@ -98,12 +98,12 @@ router.get('/', async (req, res) => {
     }
 });
 
-// @route   GET api/profile/admin/:admin_id
-// @desc    Get profile by admin id
+// @route   GET api/profile/user/:user_id
+// @desc    Get profile by user id
 // @access  Public
-router.get('/admin/:admin_id', async (req, res) => {
+router.get('/user/:user_id', async (req, res) => {
     try {
-        const profile = await Profile.findOne({ admin: req.params.admin_id}).populate('admin', ['name']);
+        const profile = await Profile.findOne({ user: req.params.user_id}).populate('user', ['name']);
 
         if(!profile) return res.status(400).json({ msg: 'Profile not found' });
 
@@ -118,14 +118,14 @@ router.get('/admin/:admin_id', async (req, res) => {
 });
 
 // @route   DELETE api/profile
-// @desc    Delete profile, admin & posts
+// @desc    Delete profile, user & posts
 // @access  Private
 router.delete('/', auth, async (req, res) => {
     try {
         // remove profile
-        await Profile.findOneAndRemove({ admin: req.admin.id });
-        // remove admin
-        await Admin.findOneAndRemove({ _id: req.admin.id });
+        await Profile.findOneAndRemove({ user: req.user.id });
+        // remove user
+        await User.findOneAndRemove({ _id: req.user.id });
         res.json({ msg: 'User removed' });
     } catch (err) {
         console.error(err.message);
@@ -133,10 +133,10 @@ router.delete('/', auth, async (req, res) => {
     }
 });
 
-// @route   PUT api/profile/experience
-// @desc    Add profile experience
+// @route   PUT api/profile/reminder
+// @desc    Add profile reminder
 // @access  Private
-router.put('/experience', [ auth, [
+router.put('/reminder', [ auth, [
     check('company', 'Company is required').not().isEmpty(),
     check('from', 'From date is required').not().isEmpty()
 ] ], async (req,res) => {
@@ -157,12 +157,12 @@ router.put('/experience', [ auth, [
         from,
         to,
         current
-    }   //creates an object with the data the admin submits
+    }   //creates an object with the data the user submits
 
     try {
-        const profile = await Profile.findOne({ admin: req.admin.id });
+        const profile = await Profile.findOne({ user: req.user.id });
 
-        profile.experience.unshift(newExp);
+        profile.reminder.unshift(newExp);
 
         await profile.save();
 
@@ -173,17 +173,17 @@ router.put('/experience', [ auth, [
     }
 });
 
-// @route   DELETE api/profile/experience/:exp_id
-// @desc    Delete experience from profile
+// @route   DELETE api/profile/reminder/:exp_id
+// @desc    Delete reminder from profile
 // @access  Private
-router.delete('/experience/:exp_id', auth, async (req, res) => {
+router.delete('/reminder/:exp_id', auth, async (req, res) => {
     try {
-        const profile = await Profile.findOne({ admin: req.admin.id });
+        const profile = await Profile.findOne({ user: req.user.id });
 
         // Get remove index
-        const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
+        const removeIndex = profile.reminder.map(item => item.id).indexOf(req.params.exp_id);
 
-        profile.experience.splice(removeIndex, 1);
+        profile.reminder.splice(removeIndex, 1);
 
         await profile.save();
 

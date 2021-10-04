@@ -5,7 +5,7 @@ const auth = require('../../middleware/auth');
 
 const Post = require('../../models/Post');
 const Profile = require('../../models/Profile');
-const Admin = require('../../models/Admin');
+const User = require('../../models/User');
 
 // @route   POST api/posts
 // @desc    Test route
@@ -19,12 +19,12 @@ router.post('/', [ auth, [
     }
 
     try {
-        const admin = await Admin.findById(req.admin.id).select('-password');
+        const user = await User.findById(req.user.id).select('-password');
 
         const newPost = new Post({
         text: req.body.text,
-        name: admin.name,
-        admin: req.admin.id
+        name: user.name,
+        user: req.user.id
         });
 
         const post = await newPost.save();
@@ -80,8 +80,8 @@ router.delete('/:id', auth, async (req, res) => {
             return res.status(404).json({ msg: 'Post not found' });
         }
 
-        // Check on the admin
-        if(post.admin.toString() !== req.admin.id) {
+        // Check on the user
+        if(post.user.toString() !== req.user.id) {
             return res.status(401).json({ msg: 'User not authorized' });
         }
 
@@ -105,11 +105,11 @@ router.put('/like/:id', auth, async (req, res) => {
         const post = await Post.findById(req.params.id);
         
         // Check if the post has already been liked
-        if(post.likes.filter(like => like.admin.toString() === req.admin.id).length > 0) {
+        if(post.likes.filter(like => like.user.toString() === req.user.id).length > 0) {
             return res.status(400).json({ msg: 'Post already liked' });
         }
 
-        post.likes.unshift({ admin: req.admin.id });
+        post.likes.unshift({ user: req.user.id });
 
         await post.save();
 
@@ -128,12 +128,12 @@ router.put('/unlike/:id', auth, async (req, res) => {
         const post = await Post.findById(req.params.id);
         
         // Check if the post has already been liked
-        if(post.likes.filter(like => like.admin.toString() === req.admin.id).length === 0) {
+        if(post.likes.filter(like => like.user.toString() === req.user.id).length === 0) {
             return res.status(400).json({ msg: 'Post has not yet been liked' });
         }
 
         // Get remove index
-        const removeIndex = post.likes.map(like => like.admin.toString()).indexOf(req.admin.id);
+        const removeIndex = post.likes.map(like => like.user.toString()).indexOf(req.user.id);
 
         post.likes.splice(removeIndex, 1);
 
@@ -158,13 +158,13 @@ router.post('/comment/:id', [auth, [
     }
 
     try {
-        const admin = await Admin.findById(req.admin.id).select('-password');
+        const user = await User.findById(req.user.id).select('-password');
         const post = await Post.findById(req.params.id);
 
         const newComment = {
         text: req.body.text,
-        name: admin.name,
-        admin: req.admin.id
+        name: user.name,
+        user: req.user.id
         };
 
         post.comments.unshift(newComment);
@@ -194,12 +194,12 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
         }
 
         // Check user
-        if(comment.admin.toString() !== req.admin.id) {
+        if(comment.user.toString() !== req.user.id) {
             return res.status(404).json({ msg: 'User not authorized' });
         }
 
         // Get remove index
-        const removeIndex = post.comments.map(comment => comment.admin.toString()).indexOf(req.admin.id);
+        const removeIndex = post.comments.map(comment => comment.user.toString()).indexOf(req.user.id);
 
         post.comments.splice(removeIndex, 1);
 

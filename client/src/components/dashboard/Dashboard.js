@@ -4,27 +4,27 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux'; 
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
-import Experience from './Experience';
+import Reminder from './Reminder';
 
 import { deleteAccount, getCurrentProfile } from '../../actions/profile';
 
-const Dashboard = ({ getCurrentProfile, deleteAccount, auth: { admin }, profile: { profile, loading } }) => {
+const Dashboard = ({ getCurrentProfile, deleteAccount, auth: { user }, profile: { profile, loading } }) => {
      useEffect(() => {
         getCurrentProfile();
-    }, []); 
+    }, [getCurrentProfile]); 
 
     return loading && profile === null ? (
     <Spinner /> 
     ) : (   
     <Fragment>
-        <h1 className="large text-primary">Dashboard</h1>
+        <h1 className="large text-primary">MyQare</h1>
         <p className="lead">
-            <i className="fas fa-user"></i> Welcome { admin && admin.name }
+            <i className="fas fa-user"></i> Welcome to MyQare { user && user.name }
         </p>
         { profile !== null ? (
         <Fragment>
             <DashboardActions />
-            <Experience experience={profile.experience} />
+            <Reminder reminder={profile.reminder} />
             <div className="my-2">
                 <button className="btn btn-danger" onClick={() => deleteAccount()}>
                     <i className="fas fa-user-minus"></i> Delete My Account
