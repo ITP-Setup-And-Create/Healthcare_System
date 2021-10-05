@@ -18,8 +18,9 @@ const Landing = ({ isAuthenticated }) => {
            Review your health status
           </p>
           <div className="buttons">
-            <Link to="/register" className="btn btn-primary">Sign Up</Link>
-            <Link to="/login" className="btn btn-light">Login</Link>
+            <Link to="/register" className="btn btn-primary">User Sign Up</Link>
+            <Link to="/login" className="btn btn-primary">User Login</Link>
+            <Link to="/adminLogin" className="btn btn-dark" style={{ color: 'white'}}>Admin Login</Link>
           </div>
         </div>
       </div>

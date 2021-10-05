@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 
-const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const authLinks = (
     <ul>
       <li>
@@ -23,8 +23,24 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <span className="hide-sm">Dashboard</span>
         </Link>
       </li>
-      <li><a onClick={logout} href="/login">
+      <li><a onClick={logout} href="/">
         <i className="fas fa-sign-out-al"></i>{' '}
+        <span className="hide-sm">Logout</span></a>
+      </li>
+    </ul>
+  );
+
+  const adminLinks = (
+    <ul>
+      <li><Link to="/profiles">User Profiles</Link></li>
+
+      <li>
+        <Link to="/adminDashboard"><i className="fas fa-user"></i>{' '}
+          <span className="hide-sm">Dashboard</span>
+        </Link>
+      </li>
+
+      <li><a onClick={logout} href="/"><i className="fas fa-sign-out-al"></i>{' '}
         <span className="hide-sm">Logout</span></a>
       </li>
     </ul>
@@ -32,9 +48,10 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   const guestLinks = (
     <ul>
-        <li><Link to="/profiles">MyProfile</Link></li>
-        <li><Link to="/register">Register</Link></li>
-        <li><Link to="/login">Login</Link></li>
+        <li><Link to="/profiles" style={{ color: '#fff', background: '#17a2b8'}}>Profiles</Link></li>
+        <li><Link to="/register" style={{ color: '#fff', background: '#17a2b8'}}>User Registration</Link></li>
+        <li><Link to="/login" style={{ color: '#fff', background: '#17a2b8'}}>User Login</Link></li>
+        <li><Link to="/adminLogin">Admin Login</Link></li>
       </ul>
   );
 
@@ -45,7 +62,18 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
           <i className="fas fa-code"></i> Home
         </Link>
       </h1>
-      { !loading && (<Fragment>{ isAuthenticated ? authLinks : guestLinks }</Fragment>) }
+      {/* { !loading && user !== null ? (<Fragment>{ isAuthenticated ? authLinks : guestLinks }</Fragment>) : (
+        <Fragment> { adminLinks } </Fragment>
+      ) } */}
+
+      { !loading && isAuthenticated ? 
+        (
+          <Fragment>{ user ? authLinks : adminLinks }</Fragment>
+        ) : 
+        (
+          <Fragment>{guestLinks}</Fragment>
+        )
+      }
     </nav>
     );
 };
