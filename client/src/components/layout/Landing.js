@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 
-const Landing = ({ isAuthenticated }) => {
-    if(isAuthenticated) {
+const Landing = ({ auth: { isAuthenticated, admin, user } }) => {
+    if(isAuthenticated && user ) {
       return <Redirect to='/dashboard' />
+    }
+    else if(isAuthenticated && admin) {
+      return <Redirect to='/adminDashboard' />
     }
 
     return (
@@ -29,11 +32,11 @@ const Landing = ({ isAuthenticated }) => {
 };
 
 Landing.propTypes = {
-  isAuthenticated: PropTypes.bool
+  auth: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+  auth: state.auth
 });
 
 export default connect(mapStateToProps)(Landing);
