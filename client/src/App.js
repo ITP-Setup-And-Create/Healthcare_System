@@ -14,6 +14,9 @@ import AddReminder from './components/profile-forms/AddReminder';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
+
+import AddMedicine from './components/medicine/AddMedicine';
+
 import PrivateRoute from './components/routing/PrivateRoute';
 import './App.css';
 
@@ -52,6 +55,7 @@ const App = () => {
             <PrivateRoute exact path="/edit-profile" component={ EditProfile } />
             <PrivateRoute exact path="/add-reminder" component={ AddReminder } />
             <PrivateRoute exact path='/posts' component={ Posts } />
+            <PrivateRoute exact path='/addMedicine' component={ AddMedicine } />
             
           </Switch>
         </section>

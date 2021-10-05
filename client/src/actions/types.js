@@ -17,3 +17,8 @@ export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
 export const GET_POSTS='GET_POSTS';
 export const POST_ERROR='POST_ERROR';
 export const DELETE_POST ='DELETE_POST';
+
+export const GET_MEDICINES = 'GET_MEDICINES';
+export const GET_MEDICINE = 'GET_MEDICINE';
+export const MEDICINE_ERROR = 'MEDICINE_ERROR';
+export const LOADING_TRUE = 'LOADING_TRUE';
