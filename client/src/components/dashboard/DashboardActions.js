@@ -8,8 +8,12 @@ const DashboardActions = () => {
             ><i className="fas fa-user-circle text-primary"></i> Edit Profile</Link>
             <Link to="/add-reminder" className="btn btn-light"
             ><i className="fab fa-black-tie text-primary"></i> Add Reminder</Link>
+            <Link to="/viewMedicines" className="btn btn-light">
+                {/* <i className="fab fa-black-tie text-primary"></i> */} View Medicines
+            </Link>
              <a href={"http://localhost:3006/LandingPage"} className="btn btn-light"
-            ><i className="fab fa-black-tie text-primary"></i> COVID 19 SYSTEM </a>
+            ><i className="fab fa-black-tie text-primary"></i> Covid-19 System </a>
+
         </div>
     )
 }

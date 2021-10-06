@@ -31,10 +31,10 @@ const AddMedicine = ({ setAlert, addMedicine, history }) => {
         if(isNaN(cost)) {
             setAlert('Cost can only be a number', 'danger');
         }
-        else if(document.getElementsByName('form')[0].value == '0') {
+        else if(document.getElementsByName('form')[0].value === '0') {
             setAlert('Select a form', 'danger');
         }
-        else if(document.getElementsByName('ageGroup')[0].value == '0') {
+        else if(document.getElementsByName('ageGroup')[0].value === '0') {
             setAlert('Select an age group', 'danger');
         }
         else {
