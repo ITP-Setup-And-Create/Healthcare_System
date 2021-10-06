@@ -12,15 +12,18 @@ router.post('/', [
     check('form', 'Form is required').not().isEmpty(),
     check('type', 'Type is required').not().isEmpty(),
     check('ageGroup', 'Age Group is required').not().isEmpty(),
-    check('cost', 'Cost is required').not().isEmpty()
+    check('cost', 'Cost is required').not().isEmpty(),
+    check('description', 'Description is required').not().isEmpty(),
+    check('countInStock', 'Stock count is required').not().isEmpty()
 ], async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, producer, form, ageGroup, cost } = req.body;
+    const { name, producer, form, ageGroup, cost, description, countInStock } = req.body;
     let type = req.body.type;
+    let imageUrl = req.body.imageUrl;
 
     try {
         let medicine = await Medicine.findOne({ name: { $regex: new RegExp("^" + name + "$", "i") } });
@@ -33,8 +36,12 @@ router.post('/', [
 
         type = type.split(',').map(type => type.trim());
 
+        if(imageUrl == '') {
+            imageUrl = 'https://i-cf65ch.gskstatic.com/content/dam/cf-consumer-healthcare/panadol/en_ie/ireland-products/panadol-tablets/MGK5158-GSK-Panadol-Tablets-455x455.png?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1463&q=80';
+        }
+
         medicine = new Medicine({
-            name, producer, form, type, ageGroup, cost
+            name, producer, form, type, ageGroup, cost, description, countInStock, imageUrl
         });
 
         await medicine.save();

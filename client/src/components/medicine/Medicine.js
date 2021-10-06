@@ -10,6 +10,9 @@ const EditMedicine = ({ match, getMedicineByName, updateMedicineByID, medicine: 
     const [formData, setFormData] = useState({ 
         name: '',
         producer: '',
+        description: '',
+        countInStock: '',
+        imageUrl: '',
         form: '',
         type: '',
         ageGroup: '',
@@ -22,6 +25,9 @@ const EditMedicine = ({ match, getMedicineByName, updateMedicineByID, medicine: 
         setFormData({
             name: medicine === null ? <Spinner /> : medicine.name,
             producer: loading ? <Spinner /> : medicine?.producer,
+            description: loading ? <Spinner /> : medicine?.description,
+            countInStock: loading ? <Spinner /> : medicine?.countInStock,
+            imageUrl: loading ? <Spinner /> : medicine?.imageUrl,
             form: loading ? <Spinner /> : medicine?.form,
             type: loading ? <Spinner /> : medicine?.type,
             ageGroup: loading ? <Spinner /> : medicine?.ageGroup,
@@ -34,6 +40,9 @@ const EditMedicine = ({ match, getMedicineByName, updateMedicineByID, medicine: 
     const {
         name,
         producer,
+        description,
+        countInStock,
+        imageUrl,
         form,
         type,
         ageGroup,
@@ -54,8 +63,18 @@ const EditMedicine = ({ match, getMedicineByName, updateMedicineByID, medicine: 
             </h1>
             <h2>Producer: {producer}</h2>
             <h2>Form: {form}</h2>
-            <small>All fields are required</small>
-            <form className="form" onSubmit={e => onSubmit(e)} > 
+            <h2>Stock Count: {countInStock}</h2>
+
+            <small style={{ color: 'red' }}>All fields are required</small>
+            
+            <form className="form" onSubmit={e => onSubmit(e)} >
+
+                <div className="form-group">
+                    <textarea placeholder="Medicine description" name="description" value={description} onChange={e => onChange(e)} required>
+                    </textarea>
+                    <small className="form-text">A brief description of this medicine</small>
+                </div>
+
                 <div className="form-group">
                     <input type="text" name="type" value={type} onChange={e => onChange(e)} />
                     <small className="form-text">Please use comma separated values </small>

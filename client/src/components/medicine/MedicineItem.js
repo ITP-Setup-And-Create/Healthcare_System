@@ -31,7 +31,7 @@ const MedicineItem = ({ medicine: { _id, name, producer, form, type, ageGroup, c
                 ) : 
                 (
                     <Fragment>
-                        <button>Add to Cart</button>
+                        <button className='btn btn-primary'>Add to Cart</button>
                     </Fragment>
                 )
                 }
