@@ -11,6 +11,9 @@ const DashboardActions = () => {
             <Link to="/viewMedicines" className="btn btn-light">
                 {/* <i className="fab fa-black-tie text-primary"></i> */} View Medicines
             </Link>
+             <a href={"http://localhost:3006/LandingPage"} className="btn btn-light"
+            ><i className="fab fa-black-tie text-primary"></i> Covid-19 System </a>
+
         </div>
     )
 }
