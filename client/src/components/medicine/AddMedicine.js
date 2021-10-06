@@ -9,6 +9,9 @@ const AddMedicine = ({ setAlert, addMedicine, history }) => {
     const [formData, setFormData] = useState({ 
         name: '',
         producer: '',
+        description: '',
+        countInStock: '',
+        imageUrl: '',
         form: '',
         type: '',
         ageGroup: '',
@@ -18,6 +21,9 @@ const AddMedicine = ({ setAlert, addMedicine, history }) => {
     const {
         name,
         producer,
+        description,
+        countInStock,
+        imageUrl,
         form,
         type,
         ageGroup,
@@ -30,6 +36,9 @@ const AddMedicine = ({ setAlert, addMedicine, history }) => {
         e.preventDefault();
         if(isNaN(cost)) {
             setAlert('Cost can only be a number', 'danger');
+        }
+        else if(isNaN(countInStock)) {
+            setAlert('Stock can only be a number', 'danger');
         }
         else if(document.getElementsByName('form')[0].value === '0') {
             setAlert('Select a form', 'danger');
@@ -62,6 +71,22 @@ const AddMedicine = ({ setAlert, addMedicine, history }) => {
                 </div>
 
                 <div className="form-group">
+                    <textarea placeholder="Medicine description" name="description" value={description} onChange={e => onChange(e)} required>
+                    </textarea>
+                    <small className="form-text">A brief description of this medicine</small>
+                </div>
+
+                <div className="form-group">
+                    <input type="text" placeholder="Stock count" name="countInStock" value={countInStock} onChange={e => onChange(e)} />
+                    <small className="form-text">The stock count</small>
+                </div>
+
+                <div className="form-group">
+                    <input type="text" placeholder="Add an image URL from the web" name="imageUrl" value={imageUrl} onChange={e => onChange(e)}/>
+                    <small className="form-text">A default image will be set if this is empty</small>
+                </div>
+
+                <div className="form-group">
                     <select name="form" value={form} onChange={e => onChange(e)}>
                         <option value="0">* Select the form of the medicine</option>
                         <option value="Tablet">Tablet</option>
@@ -69,6 +94,7 @@ const AddMedicine = ({ setAlert, addMedicine, history }) => {
                         <option value="Powder">Powder</option>
                         <option value="Capsule">Capsule</option>
                     </select>
+                    <small className="form-text">Tablet/Liquid/Powder/Capsule</small>
                 </div>
 
                 <div className="form-group">
@@ -83,6 +109,7 @@ const AddMedicine = ({ setAlert, addMedicine, history }) => {
                         <option value="16-20">16-20</option>
                         <option value="21+">21+</option>
                     </select>
+                    <small className="form-text">Age groups that can take this medicine</small>
                 </div>
 
                 <div className="form-group">
