@@ -16,6 +16,8 @@ import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
 
 import AddMedicine from './components/medicine/AddMedicine';
+import ViewMedicines from './components/medicine/ViewMedicines';
+import Medicine from './components/medicine/Medicine';
 
 import PrivateRoute from './components/routing/PrivateRoute';
 import './App.css';
@@ -56,6 +58,8 @@ const App = () => {
             <PrivateRoute exact path="/add-reminder" component={ AddReminder } />
             <PrivateRoute exact path='/posts' component={ Posts } />
             <PrivateRoute exact path='/addMedicine' component={ AddMedicine } />
+            <PrivateRoute exact path='/viewMedicines' component={ ViewMedicines } />
+            <PrivateRoute exact path="/medicine/:id" component={ Medicine } />
             
           </Switch>
         </section>
