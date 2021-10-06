@@ -1,0 +1,41 @@
+.shippingform {
+  width: 100%;
+  /*padding: 1rem;*/
+  margin-bottom: 8px;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr 1fr 1fr;
+  gap: 8px;
+  /*background: #fff;*/
+  /*border-radius: 2px;*/
+  place-items: center;
+
+  background-color: #f2f2f2;
+  padding: 5px 20px 15px 20px;
+  border: 1px solid lightgrey;
+  border-radius: 3px;
+}
+.shippingform h2 {
+  color: #17a2b8;
+  font-size: 3rem;
+  width: max-content;
+}
+
+.formfield {
+  width: 1375px;
+  margin-bottom: 20px;
+  padding: 12px;
+  border: 1px solid #171717;
+  border-radius: 3px;
+}
+
+input[type='text'] {
+  width: 1350px;
+  margin: 2px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.container h2 {
+  padding: 1rem;
+}
