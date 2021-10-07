@@ -60,7 +60,6 @@ const App = () => {
             <PrivateRoute exact path='/addMedicine' component={ AddMedicine } />
             <PrivateRoute exact path='/viewMedicines' component={ ViewMedicines } />
             <PrivateRoute exact path="/medicine/:id" component={ Medicine } />
-            
           </Switch>
         </section>
       </Fragment>

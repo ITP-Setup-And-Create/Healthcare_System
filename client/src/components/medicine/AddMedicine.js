@@ -7,16 +7,20 @@ import { addMedicine } from '../../actions/medicine';
 
 const AddMedicine = ({ setAlert, addMedicine, history }) => {
     const [formData, setFormData] = useState({ 
-        name: '',
-        producer: '',
-        description: '',
-        countInStock: '',
-        imageUrl: '',
-        form: '',
-        type: '',
-        ageGroup: '',
-        cost: ''
+        name: 'Aspirin',
+        producer: 'FDA',
+        description: 'Used to treat pain and reduce fever or inflammation. Jusprin is sometimes used to treat or prevent heart attacks, strokes, and chest pain angina.',
+        countInStock: '10',
+        imageUrl: '6',
+        form: 'Tablet',
+        type: 'Anti-Flammatory, Antipyretics',
+        ageGroup: '21+',
+        cost: '6'
     });
+
+    function autoFill() {
+        document.getElementsByName("name").value = "Test";
+    }
 
     const {
         name,
@@ -59,6 +63,7 @@ const AddMedicine = ({ setAlert, addMedicine, history }) => {
             <p className="lead">
                 All the fields are required to be filled
             </p>
+
             <form className="form" onSubmit={e => onSubmit(e)} > 
                 <div className="form-group">
                     <input type="text" placeholder="Medicine Name" name="name" value={name} onChange={e => onChange(e)} required/>
