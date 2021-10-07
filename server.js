@@ -19,6 +19,7 @@ app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/posts', require('./routes/api/posts'));
 app.use('/api/admin', require('./routes/api/admin'));   //Maliks
 app.use('/api/medicine', require('./routes/api/medicine')); //Maliks
+app.use('/api/cart', require('./routes/api/cart'));     //Maliks
 
 
 const PORT = process.env.PORT || 5000;

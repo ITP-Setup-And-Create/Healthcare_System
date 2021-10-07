@@ -1,10 +1,20 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteMedicine, loadingTrue } from '../../actions/medicine';
+import { addMedicineToCart } from '../../actions/cart';
 
-const MedicineItem = ({ medicine: { _id, name, producer, form, type, ageGroup, cost }, deleteMedicine, loadingTrue, auth: { admin } }) => {
+const MedicineItem = ({ medicine: { _id, name, producer, form, type, ageGroup, cost }, deleteMedicine, loadingTrue, addMedicineToCart, auth: { admin } }) => {
+
+    const [formData, setFormData] = useState({
+        quantity: ''
+    });
+
+    const {
+        quantity
+    } = formData;
+
     return (
         <div className='profile bg-light'>
             <div>
@@ -31,7 +41,7 @@ const MedicineItem = ({ medicine: { _id, name, producer, form, type, ageGroup, c
                 ) : 
                 (
                     <Fragment>
-                        <button className='btn btn-primary'>Add to Cart</button>
+                        <button className='btn btn-primary' onClick={() => addMedicineToCart(formData, name)}>Add to Cart</button>
                     </Fragment>
                 )
                 }
@@ -43,11 +53,12 @@ const MedicineItem = ({ medicine: { _id, name, producer, form, type, ageGroup, c
 MedicineItem.propTypes = {
     medicine: PropTypes.object.isRequired,
     deleteMedicine: PropTypes.func.isRequired,
-    loadingTrue:PropTypes.func.isRequired
+    loadingTrue:PropTypes.func.isRequired,
+    addMedicineToCart: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
     auth: state.auth
 })
 
-export default connect(mapStateToProps, { deleteMedicine, loadingTrue })(MedicineItem);
+export default connect(mapStateToProps, { deleteMedicine, loadingTrue, addMedicineToCart })(MedicineItem);
